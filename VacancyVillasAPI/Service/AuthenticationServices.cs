@@ -34,7 +34,7 @@ namespace VacancyVillasAPI.Service
            ClaimDTO claimDTO = new ClaimDTO();
 
             claimDTO.user = tuple.Item1.FirstOrDefault();
-
+             
            
             claimDTO.userModules = tuple.Item2.ToList();
             claimDTO.UserPages = tuple.Item3.ToList();

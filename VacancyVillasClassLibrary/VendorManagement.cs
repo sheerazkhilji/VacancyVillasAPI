@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace VacancyVillasClassLibrary
 {
-   public class UserManagment:City
+   public class VendorManagement :City
     {
+
+
+
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Firstname { get; set; }
@@ -23,6 +26,13 @@ namespace VacancyVillasClassLibrary
 
         public DateTime? DateOfBirth { get; set; }
 
+
+        public string CompanyName { get; set; }
+
+        public string CompanyDiscription { get; set; }
+
+        public string WebSite { get; set; }
+
         public bool IsActive { get; set; }
 
         public DateTime? CreateDate { get; set; }
@@ -32,21 +42,9 @@ namespace VacancyVillasClassLibrary
 
         public string UpdateBy { get; set; }
 
+        public string  Img { get; set; }
+
 
 
     }
-    public class Country
-    {
-
-        public int countryId { get; set; }
-        public string CountryName { get; set; }
-    }
-    public class City: Country
-    {
-
-        public int CityId { get; set; }
-        public string CityName { get; set; }
-    }
-
-
 }
