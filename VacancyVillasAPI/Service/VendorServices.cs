@@ -19,6 +19,10 @@ namespace VacancyVillasAPI.Service
         public int selfVendorGegistration(VendorManagement obj);
 
 
+        public object GetAllDropDownForHouse();
+
+
+
 
     }
     public class VendorServices : IVendorServices
@@ -36,6 +40,11 @@ namespace VacancyVillasAPI.Service
             DynamicParameters parameters = new DynamicParameters();
 
             var data = _dapper.GetAll<Country>(@"[dbo].[usp_GetAllCountries]", parameters);
+
+
+          
+
+
 
 
             return data;
@@ -83,6 +92,32 @@ namespace VacancyVillasAPI.Service
             parameters.Add("@WebSite", obj.WebSite, DbType.String, ParameterDirection.Input);
 
           return _dapper.Insert<int>(@"[dbo].[usp_SelfVendorRegistration]", parameters);
+        }
+
+        public object GetAllDropDownForHouse()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            HouseDropDown obj = new HouseDropDown();
+
+
+            var data = _dapper.GetMultipleObjects(@"[dbo].[usp_GetAllDropDownForHouse]", parameters,gr=>gr.Read<PropertyType>(), gr => gr.Read<RentalForm>(), gr => gr.Read<Country>() ,gr => gr.Read<GeneralAmenities>(), gr => gr.Read<OtherAmenities>(), gr => gr.Read<SafeAmenities>());
+
+
+            obj.propertyTypes = data.Item1.ToList();
+            obj.rentalForms = data.Item2.ToList();
+            obj.countries = data.Item3.ToList();
+            obj.generalAmenities = data.Item4.ToList();
+            obj.otherAmenities = data.Item5.ToList();
+            obj.safeAmenities = data.Item6.ToList();
+
+
+
+
+
+
+
+            return obj;
         }
     }
 }

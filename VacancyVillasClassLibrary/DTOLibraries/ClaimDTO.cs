@@ -51,6 +51,9 @@ namespace ATSClassLibrary.DTOLibraries
         public int? PageActionId { get; set; }
         public string PageActionName { get; set; }
 
+
+        public int? PageId { get; set; }
+        public string PageName { get; set; }
         public bool IsActive { get; set; }
 
     }
