@@ -27,7 +27,7 @@ namespace VacancyVillasAPI.Controllers
         public Response Authenticate(LoginCredentials obj)
         {
             Response response = new Response();
-            ClaimDTO claimDTO = new ClaimDTO();
+            UserManagment claimDTO = new UserManagment();
             try
             {
 
@@ -40,7 +40,7 @@ namespace VacancyVillasAPI.Controllers
 
 
                     response = CustomStatusResponse.GetResponse(200);
-                    response.Token = TokenManager.GenerateToken(user);
+                    response.Token = TokenManager.GenerateToken(user.user);
                     response.Data = new
                     {
                         DataObj = user,

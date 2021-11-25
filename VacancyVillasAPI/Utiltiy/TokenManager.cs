@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using VacancyVillasClassLibrary;
 
 namespace ATS.Utiltiy
 {
@@ -17,7 +18,7 @@ namespace ATS.Utiltiy
         //static string encryptionSecureKey = "-AASA-BMCReuters2020";
         private static string Secret = "J8c20cxkPZCC/0e0ZUcjrGocsk95gOAqjzJ09apAklM=";
         private static double TokenExpireTime = 3600.0;
-        public static string GenerateToken(ClaimDTO obj)
+        public static string GenerateToken(UserManagment obj)
         {
 
             byte[] key = Convert.FromBase64String(Secret);
@@ -25,11 +26,11 @@ namespace ATS.Utiltiy
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                    new Claim("UserId",obj.user.UserId.ToString()),
-                    new Claim("Username", obj.user.Username.ToString()),
-                    new Claim("FirstName",obj.user.Firstname.ToString()),
+                    new Claim("UserId",obj.UserId.ToString()),
+                    new Claim("Username", obj.Username.ToString()),
+                    new Claim("FirstName",obj.Firstname.ToString()),
 
-                    new Claim("LastName",obj.user.Lastname.ToString()),
+                    new Claim("LastName",obj.Lastname.ToString()),
                     //new Claim("StaffActive",Convert.ToString(obj.StaffActive)),
                     //new Claim("StaffRights",Convert.ToString(obj.StaffRights)),
                     //new Claim("SuperAdminRights",Convert.ToString(obj.SuperAdminRights)),
@@ -91,9 +92,9 @@ namespace ATS.Utiltiy
                 return null;
             }
         }
-        public static ClaimDTO ValidateToken(string token)
+        public static UserManagment ValidateToken(string token)
         {
-            ClaimDTO obj = new ClaimDTO();
+            UserManagment obj = new UserManagment();
             ClaimsPrincipal principal = GetPrincipal(token);
             if (principal == null)
                 return null;
@@ -114,10 +115,10 @@ namespace ATS.Utiltiy
             Claim LastName = identity.FindFirst("LastName");
 
 
-            obj.user.Username = userName.Value;
-            obj.user.UserId = Convert.ToInt32(userId.Value);
-            obj.user.Firstname = FirstName.Value;
-            obj.user.Lastname = LastName.Value;
+            obj.Username = userName.Value;
+            obj.UserId = Convert.ToInt32(userId.Value);
+            obj.Firstname = FirstName.Value;
+            obj.Lastname = LastName.Value;
 
 
             //obj.StaffRights =  Convert.ToBoolean(staffRights.Value);
@@ -145,7 +146,7 @@ namespace ATS.Utiltiy
             return obj;
         }
 
-        public static ClaimDTO GetValidateToken(HttpRequest httpRequest)
+        public static UserManagment GetValidateToken(HttpRequest httpRequest)
         {
             string value = string.Empty;
             if (!httpRequest.Headers.ContainsKey("Authorization"))
@@ -154,7 +155,7 @@ namespace ATS.Utiltiy
             }
 
             string authHeader = httpRequest.Headers["Authorization"];
-            ClaimDTO claimDTO = null;
+            UserManagment claimDTO = null;
             string token = authHeader;
             //if (authHeader !=n)
             //{

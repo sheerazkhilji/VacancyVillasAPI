@@ -33,7 +33,7 @@ namespace VacancyVillasAPI.Controllers
         [HttpPost("AddUser")]
         public Response AddUser([FromBody] UserManagment obj)
         {
-            ClaimDTO claimDTO = null;
+            UserManagment claimDTO = null;
             Response response = new Response();
 
             try
