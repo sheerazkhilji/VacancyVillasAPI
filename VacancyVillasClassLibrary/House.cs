@@ -32,7 +32,11 @@ namespace VacancyVillasClassLibrary
         public int CookingRule { get; set; }
         public string AdditionalRuleText { get; set; }
         public string PlaceDesForClient { get; set; }
+
         public string HouseCoverImage { get; set; }
+        public string HousePlaceImage { get; set; }
+        
+        public string Currency { get; set; }
         public float MonThusPrice { get; set; }
         
         public float FriSunPrice { get; set; }
@@ -41,6 +45,7 @@ namespace VacancyVillasClassLibrary
         public float NightsMax { get; set; }
         public int stepCode { get; set; }
         public DateTime CreateDate { get; set; }
+        public string AvailDate { get; set; }
 
 
         public List<HouseGeneralAmenities> houseGeneralAmenities { get; set; }

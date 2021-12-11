@@ -141,51 +141,57 @@ namespace VacancyVillasAPI.Service
 
             table1.Columns.Add("GeneralAmentiesIds", typeof(int));
             table1.Columns.Add("IsActive", typeof(bool));
-            
+
             table2.Columns.Add("OtherAmenitiesIds", typeof(int));
             table2.Columns.Add("IsActive", typeof(bool));
-            
+
             table3.Columns.Add("SafeAmenitiesIds", typeof(int));
             table3.Columns.Add("IsActive", typeof(bool));
 
             table4.Columns.Add("HouseId", typeof(int));
             table4.Columns.Add("HouseNotAvaiableDates", typeof(DateTime));
 
-
-            foreach (var item in obj.houseGeneralAmenities)
-            {
-                var row = table1.NewRow();
-                row["GeneralAmentiesIds"] = Convert.ToInt32(item.GeneralAmentiesId);
-                row["IsActive"] = item.IsActive;
-                table1.Rows.Add(row);
+            if (obj.houseGeneralAmenities != null) {
+                foreach (var item in obj.houseGeneralAmenities)
+                {
+                    var row = table1.NewRow();
+                    row["GeneralAmentiesIds"] = Convert.ToInt32(item.GeneralAmentiesId);
+                    row["IsActive"] = item.IsActive;
+                    table1.Rows.Add(row);
+                }
             }
 
-            foreach (var item in obj.houseOtherAmenities)
+            if (obj.houseOtherAmenities != null)
             {
-                var row = table1.NewRow();
-                row["OtherAmenitiesIds"] = Convert.ToInt32(item.OtherAmenitiesId);
-                row["IsActive"] = item.IsActive;
-                table2.Rows.Add(row);
+                foreach (var item in obj.houseOtherAmenities)
+                {
+                    var row = table2.NewRow();
+                    row["OtherAmenitiesIds"] = Convert.ToInt32(item.OtherAmenitiesId);
+                    row["IsActive"] = item.IsActive;
+                    table2.Rows.Add(row);
+                }
             }
 
-            foreach (var item in obj.houseSafeAmenities)
+            if (obj.houseSafeAmenities != null) { 
+                foreach (var item in obj.houseSafeAmenities)
+                {
+                    var row = table3.NewRow();
+                    row["SafeAmenitiesIds"] = Convert.ToInt32(item.HouseSafeAmenitiesId);
+                    row["IsActive"] = item.IsActive;
+                    table3.Rows.Add(row);
+                }
+        }
+
+            if (obj.HouseNotAvaiable != null)
             {
-                var row = table1.NewRow();
-                row["SafeAmenitiesIds"] = Convert.ToInt32(item.HouseSafeAmenitiesId);
-                row["IsActive"] = item.IsActive;
-                table3.Rows.Add(row);
+                foreach (var item in obj.HouseNotAvaiable)
+                {
+                    var row = table4.NewRow();
+                    row["HouseId"] = Convert.ToInt32(obj.HouseId);
+                    row["HouseNotAvaiableDates"] = item;
+                    table4.Rows.Add(row);
+                }
             }
-
-
-
-            foreach (var item in obj.HouseNotAvaiable)
-            {
-                var row = table1.NewRow();
-                row["HouseId"] = Convert.ToInt32(obj.HouseId);
-                row["HouseNotAvaiableDates"] = item;
-                table4.Rows.Add(row);
-            }
-
 
             parameters.Add("@HouseId", obj.HouseId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PropertyId", obj.PropertyId, DbType.Int32, ParameterDirection.Input);
@@ -202,20 +208,24 @@ namespace VacancyVillasAPI.Service
             parameters.Add("@Acreage", obj.Acreage, DbType.String, ParameterDirection.Input);
             parameters.Add("@Guests", obj.Guests, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Beds", obj.Beds, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@Bedroom", obj.Bedroom, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@Bathroom", obj.Bathroom, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@kitchen", obj.Kitchen, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@GeneralAmenitiesRule", obj.GeneralAmenitiesRule, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PetRule", obj.PetRule, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PartyOrganizingRule", obj.PartyOrganizingRule, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@CookingRule", obj.CookingRule, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@PlaceDesForClient", obj.PlaceDesForClient, DbType.String, ParameterDirection.Input);
             parameters.Add("@HouseCoverImage", obj.HouseCoverImage, DbType.String, ParameterDirection.Input);
+            parameters.Add("@HousePlaceImage", obj.HousePlaceImage, DbType.String, ParameterDirection.Input);
+            parameters.Add("@Currency", obj.Currency, DbType.String, ParameterDirection.Input);
             parameters.Add("@MonThusPrice", obj.MonThusPrice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@FriSunPrice", obj.FriSunPrice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@Longtermprice", obj.Longtermprice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@NightsMin", obj.NightsMin, DbType.Double, ParameterDirection.Input);
             parameters.Add("@NightsMax", obj.NightsMax, DbType.Double, ParameterDirection.Input);
             parameters.Add("@AdditionalRulesForHouse", obj.AdditionalRuleText, DbType.String, ParameterDirection.Input);
-            parameters.Add("@AdditionalRulesForHouse", obj.AdditionalRuleText, DbType.String, ParameterDirection.Input);
+            parameters.Add("@AvailDate", obj.AvailDate, DbType.String, ParameterDirection.Input);
 
             parameters.Add("@type_HouseGeneralAmenities", table1.AsTableValuedParameter("dbo.type_HouseGeneralAmenities"));
             parameters.Add("@type_HouseOtherAmenities", table2.AsTableValuedParameter("dbo.type_HouseOtherAmenities"));
