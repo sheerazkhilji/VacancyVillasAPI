@@ -24,8 +24,11 @@ namespace VacancyVillasAPI.Service
 
         public int AddUpdateHouse(House obj);
 
+        public List<HouseListByvendor> HouseListByVendor(int userid);
 
 
+
+        public object getHouseByIdForVendor(int HouseId);
 
 
 
@@ -194,6 +197,8 @@ namespace VacancyVillasAPI.Service
             }
 
             parameters.Add("@HouseId", obj.HouseId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@UserId", obj.UserId, DbType.Int32, ParameterDirection.Input);
+          
             parameters.Add("@PropertyId", obj.PropertyId, DbType.Int32, ParameterDirection.Input);
             parameters.Add("@PlaceName", obj.PlaceName, DbType.String, ParameterDirection.Input);
             parameters.Add("@RentalId", obj.RentalId, DbType.Int32, ParameterDirection.Input);
@@ -225,14 +230,59 @@ namespace VacancyVillasAPI.Service
             parameters.Add("@NightsMin", obj.NightsMin, DbType.Double, ParameterDirection.Input);
             parameters.Add("@NightsMax", obj.NightsMax, DbType.Double, ParameterDirection.Input);
             parameters.Add("@AdditionalRulesForHouse", obj.AdditionalRuleText, DbType.String, ParameterDirection.Input);
-            parameters.Add("@AvailDate", obj.AvailDate, DbType.String, ParameterDirection.Input);
+            parameters.Add("@AvailDate", obj.AvailDate, DbType.DateTime, ParameterDirection.Input);
 
             parameters.Add("@type_HouseGeneralAmenities", table1.AsTableValuedParameter("dbo.type_HouseGeneralAmenities"));
             parameters.Add("@type_HouseOtherAmenities", table2.AsTableValuedParameter("dbo.type_HouseOtherAmenities"));
             parameters.Add("@type_HouseSafeAmenities", table3.AsTableValuedParameter("dbo.type_HouseSafeAmenities"));
             parameters.Add("@type_HouseNotAvaiable", table4.AsTableValuedParameter("dbo.type_HouseNotAvaiable"));
+            parameters.Add("@stepCode", obj.stepCode, DbType.Int32, ParameterDirection.Input);
 
             return _dapper.Insert<int>(@"[dbo].[usp_AddUpdateHouse]", parameters);
+        }
+
+        public List<HouseListByvendor> HouseListByVendor(int userid)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserId", userid, DbType.Int32, ParameterDirection.Input);
+
+            var data = _dapper.GetAll<HouseListByvendor>(@"[dbo].[usp_GetAllHousesByVendor]", parameters);
+
+
+
+
+
+
+            return data;
+
+
+        }
+
+        public object getHouseByIdForVendor(int HouseId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+
+            HouseDropDown obj = new HouseDropDown();
+
+
+            parameters.Add("@HouseId", HouseId, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetMultipleObjects(@"[dbo].[usp_getHouseByIdForVendor]", parameters, gr => gr.Read<PropertyType>(), gr => gr.Read<RentalForm>(), gr => gr.Read<Country>(), gr => gr.Read<GeneralAmenities>(), gr => gr.Read<OtherAmenities>(), gr => gr.Read<SafeAmenities>(), gr => gr.Read<House>());
+
+
+            obj.propertyTypes = data.Item1.ToList();
+            obj.rentalForms = data.Item2.ToList();
+            obj.countries = data.Item3.ToList();
+            obj.generalAmenities = data.Item4.ToList();
+            obj.otherAmenities = data.Item5.ToList();
+            obj.safeAmenities = data.Item6.ToList();
+            obj.house = data.Item7.FirstOrDefault();
+           
+
+
+
+
+            return obj;
         }
     }
 }

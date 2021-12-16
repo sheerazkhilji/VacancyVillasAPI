@@ -9,12 +9,13 @@ namespace VacancyVillasClassLibrary
     public class House
     {
         public int HouseId { get; set; }
+        public int UserId { get; set; }
         public int PropertyId { get; set; }
         public string PlaceName { get; set; }
         public int RentalId { get; set; }
         public float Longitude { get; set; }
         public float Latitude { get; set; }
-        public int  CountryId { get; set; }
+        public int?  CountryId { get; set; }
         public string StreetName { get; set; }
         public string RoomNumber { get; set; }
         public string CityName { get; set; }
@@ -45,7 +46,7 @@ namespace VacancyVillasClassLibrary
         public float NightsMax { get; set; }
         public int stepCode { get; set; }
         public DateTime CreateDate { get; set; }
-        public string AvailDate { get; set; }
+        public DateTime AvailDate { get; set; }
 
 
         public List<HouseGeneralAmenities> houseGeneralAmenities { get; set; }
@@ -86,7 +87,7 @@ namespace VacancyVillasClassLibrary
 
 
 
-    public   class HouseDropDown:House
+    public   class HouseDropDown
 
     {
 
@@ -103,8 +104,32 @@ namespace VacancyVillasClassLibrary
         public List<SafeAmenities> safeAmenities { get; set; }
 
 
+        public House house { get; set; }
+
     }
 
+    public class HouseListByvendor
+    {
+        public int id { get; set; }
+
+        public int authorId { get; set; }
+
+        public DateTime date { get; set; }
+
+        public string title { get; set; }
+
+        public string featuredImage { get; set; }
+
+
+        public string galleryImgslist { get; set; }
+
+        public int Bedroom { get; set; }
+
+        public float price { get; set; }
+        public int stepCode { get; set; }
+
+        public string[] galleryImgs { get; set; }
+    }
 
 
 

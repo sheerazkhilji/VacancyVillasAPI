@@ -14,5 +14,7 @@ namespace VacancyVillasClassLibrary
         public string SafeAmenitiesNameFr { get; set; }
         public string SafeAmenitiesNameSp { get; set; }
         public string SafeAmenitiesNameDu { get; set; }
+        public bool IsActive { get; set; }
+
     }
 }
