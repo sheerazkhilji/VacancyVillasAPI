@@ -38,6 +38,8 @@ namespace VacancyVillasClassLibrary
         public string HousePlaceImage { get; set; }
         
         public string Currency { get; set; }
+
+        public float OneNightPrice { get; set; }
         public float MonThusPrice { get; set; }
         
         public float FriSunPrice { get; set; }
@@ -46,14 +48,22 @@ namespace VacancyVillasClassLibrary
         public float NightsMax { get; set; }
         public int stepCode { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime AvailDate { get; set; }
+        public DateTime? AvailDate { get; set; }
 
 
         public List<HouseGeneralAmenities> houseGeneralAmenities { get; set; }
         public List<HouseOtherAmenities> houseOtherAmenities { get; set; }
         public List<HouseSafeAmenities> houseSafeAmenities { get; set; }
 
-        public List<DateTime> HouseNotAvaiable { get; set; }
+        public List<HouseeDates> HouseNotAvaiable { get; set; }
+
+        
+    }
+
+
+    public class HouseeDates
+    {
+        public DateTime HouseNotAvaiable { get; set; }
 
 
     }
@@ -79,7 +89,7 @@ namespace VacancyVillasClassLibrary
     {
 
 
-        public int HouseSafeAmenitiesId { get; set; }
+        public int safeAmenitiesId { get; set; }
         public int HouseId { get; set; }
         public bool IsActive { get; set; }
     }
@@ -103,6 +113,8 @@ namespace VacancyVillasClassLibrary
 
         public List<SafeAmenities> safeAmenities { get; set; }
 
+
+        public List<HouseeDates> HouseNotAvaiable { get; set; }
 
         public House house { get; set; }
 

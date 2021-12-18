@@ -44,7 +44,11 @@ namespace VacancyVillasAPI.Controllers
                     response.Data = new
                     {
                         DataObj = user,
-                      
+                        Userdata = user.user,
+                        Modules = user.userModules,
+                        Pages = user.UserPages,
+                        PagesActons = user.UserPageActions
+
                         //Menu = menu,
                         //IndexPageController = menu[0].DynamicModulePagesMenus[0].UrlController,
                         //IndexPageAction = menu[0].DynamicModulePagesMenus[0].UrlAction

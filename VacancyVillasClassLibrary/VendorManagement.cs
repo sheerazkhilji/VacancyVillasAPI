@@ -35,6 +35,9 @@ namespace VacancyVillasClassLibrary
 
         public bool IsActive { get; set; }
 
+        public bool IsApproved { get; set; }
+
+
         public DateTime? CreateDate { get; set; }
 
         public string CreatedBy { get; set; }

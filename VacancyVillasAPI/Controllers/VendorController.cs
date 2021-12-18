@@ -468,6 +468,64 @@ namespace VacancyVillasAPI.Controllers
 
         }
 
+        [HttpPost("ListOfVendors")]
+        public Response ListOfVendors()
+        {
+
+            Response response = new Response();
+
+            try
+            {
+
+
+
+
+                var res = _service.ListOfVendors();
+                response = CustomStatusResponse.GetResponse(200);
+
+                if (res !=null)
+                {
+
+                    #region Set New Entry In Cache
+
+                    //cacheData.Add(res);
+                    //cacheManager.Remove(cacheName);
+                    //cacheManager.CreateEntry(cacheName, cacheData);
+
+                    #endregion
+                    response.Data = res;
+                    response.ResponseMsg = "Data save successfully!";
+                }
+                return response;
+
+
+
+            }
+            catch (DbException ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(600);
+
+
+
+
+                response.ResponseMsg = ex.Message;
+
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response = CustomStatusResponse.GetResponse(500);
+                // response.Token = TokenManager.GenerateToken(claimDTO);
+                response.ResponseMsg = ex.Message;
+                return response;
+            }
+
+        }
+
+
 
     }
 }

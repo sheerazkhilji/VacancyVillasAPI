@@ -30,7 +30,7 @@ namespace VacancyVillasAPI.Service
 
         public object getHouseByIdForVendor(int HouseId);
 
-
+        public List<VendorManagement> ListOfVendors();
 
 
     }
@@ -179,7 +179,7 @@ namespace VacancyVillasAPI.Service
                 foreach (var item in obj.houseSafeAmenities)
                 {
                     var row = table3.NewRow();
-                    row["SafeAmenitiesIds"] = Convert.ToInt32(item.HouseSafeAmenitiesId);
+                    row["SafeAmenitiesIds"] = Convert.ToInt32(item.safeAmenitiesId);
                     row["IsActive"] = item.IsActive;
                     table3.Rows.Add(row);
                 }
@@ -191,7 +191,7 @@ namespace VacancyVillasAPI.Service
                 {
                     var row = table4.NewRow();
                     row["HouseId"] = Convert.ToInt32(obj.HouseId);
-                    row["HouseNotAvaiableDates"] = item;
+                    row["HouseNotAvaiableDates"] = item.HouseNotAvaiable;
                     table4.Rows.Add(row);
                 }
             }
@@ -224,6 +224,7 @@ namespace VacancyVillasAPI.Service
             parameters.Add("@HouseCoverImage", obj.HouseCoverImage, DbType.String, ParameterDirection.Input);
             parameters.Add("@HousePlaceImage", obj.HousePlaceImage, DbType.String, ParameterDirection.Input);
             parameters.Add("@Currency", obj.Currency, DbType.String, ParameterDirection.Input);
+            parameters.Add("@OneNightPrice", obj.OneNightPrice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@MonThusPrice", obj.MonThusPrice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@FriSunPrice", obj.FriSunPrice, DbType.Double, ParameterDirection.Input);
             parameters.Add("@Longtermprice", obj.Longtermprice, DbType.Double, ParameterDirection.Input);
@@ -267,7 +268,7 @@ namespace VacancyVillasAPI.Service
 
 
             parameters.Add("@HouseId", HouseId, DbType.Int32, ParameterDirection.Input);
-            var data = _dapper.GetMultipleObjects(@"[dbo].[usp_getHouseByIdForVendor]", parameters, gr => gr.Read<PropertyType>(), gr => gr.Read<RentalForm>(), gr => gr.Read<Country>(), gr => gr.Read<GeneralAmenities>(), gr => gr.Read<OtherAmenities>(), gr => gr.Read<SafeAmenities>(), gr => gr.Read<House>());
+            var data = _dapper.GetMultipleObjects(@"[dbo].[usp_getHouseByIdForVendor]", parameters, gr => gr.Read<PropertyType>(), gr => gr.Read<RentalForm>(), gr => gr.Read<Country>(), gr => gr.Read<GeneralAmenities>(), gr => gr.Read<OtherAmenities>(), gr => gr.Read<SafeAmenities>(), gr=>gr.Read<HouseeDates>(),gr => gr.Read<House>());
 
 
             obj.propertyTypes = data.Item1.ToList();
@@ -276,13 +277,25 @@ namespace VacancyVillasAPI.Service
             obj.generalAmenities = data.Item4.ToList();
             obj.otherAmenities = data.Item5.ToList();
             obj.safeAmenities = data.Item6.ToList();
-            obj.house = data.Item7.FirstOrDefault();
+            obj.HouseNotAvaiable = data.Item7.Item1.ToList();
+            obj.house = data.Item7.Item2.FirstOrDefault();
            
 
 
 
 
             return obj;
+        }
+
+        public List<VendorManagement> ListOfVendors()
+        {
+            DynamicParameters parameters = new DynamicParameters();
+           
+
+            var data = _dapper.GetAll<VendorManagement>(@"[dbo].[usp_GetAllVendors]", parameters);
+
+
+            return data;
         }
     }
 }
