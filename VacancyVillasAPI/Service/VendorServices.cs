@@ -33,6 +33,11 @@ namespace VacancyVillasAPI.Service
         public List<VendorManagement> ListOfVendors();
 
 
+        public object getHouseByIdForPreview(int HouseId);
+
+
+
+
     }
     public class VendorServices : IVendorServices
     {
@@ -296,6 +301,36 @@ namespace VacancyVillasAPI.Service
 
 
             return data;
+        }
+
+        public object getHouseByIdForPreview(int HouseId)
+        {
+
+            DynamicParameters parameters = new DynamicParameters();
+
+            HousePreview obj = new HousePreview();
+
+
+            parameters.Add("@HouseId", HouseId, DbType.Int32, ParameterDirection.Input);
+            var data = _dapper.GetMultipleObjects(@"[dbo].[usp_GetHouseForPreview]", parameters, gr => gr.Read<House>(),gr=>gr.Read<VendorManagement>(), gr => gr.Read<PropertyType>(), gr => gr.Read<RentalForm>(), gr => gr.Read<Country>(), gr => gr.Read<HouseeDates>(), gr => gr.Read<GeneralAmenities>(), gr => gr.Read<SafeAmenities>(), gr => gr.Read<OtherAmenities>());
+
+
+            obj.house = data.Item1.FirstOrDefault();
+            obj.vendor = data.Item2.FirstOrDefault();
+            obj.propertyType = data.Item3.FirstOrDefault();
+            obj.rentalForm = data.Item4.FirstOrDefault();
+            obj.countries = data.Item5.FirstOrDefault();
+            obj.HouseNotAvaiable = data.Item6.ToList();
+            obj.generalAmenities = data.Item7.Item1.ToList();
+            obj.safeAmenities = data.Item7.Item2.ToList();
+
+            obj.otherAmenities = data.Item7.Item3.ToList();
+          
+            
+
+
+
+            return obj;
         }
     }
 }

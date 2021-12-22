@@ -49,8 +49,9 @@ namespace VacancyVillasClassLibrary
         public int stepCode { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? AvailDate { get; set; }
+        public bool IsApproved { get; set; }
 
-
+        public bool IsActive { get; set; }
         public List<HouseGeneralAmenities> houseGeneralAmenities { get; set; }
         public List<HouseOtherAmenities> houseOtherAmenities { get; set; }
         public List<HouseSafeAmenities> houseSafeAmenities { get; set; }
@@ -118,6 +119,37 @@ namespace VacancyVillasClassLibrary
 
         public House house { get; set; }
 
+
+
+    }
+
+
+
+
+    public class HousePreview
+
+    {
+
+        public PropertyType propertyType { get; set; }
+
+        public RentalForm rentalForm { get; set; }
+
+        public Country countries { get; set; }
+        public List<GeneralAmenities> generalAmenities { get; set; }
+
+        public List<OtherAmenities> otherAmenities { get; set; }
+
+
+        public List<SafeAmenities> safeAmenities { get; set; }
+
+
+        public List<HouseeDates> HouseNotAvaiable { get; set; }
+
+        public House house { get; set; }
+
+
+        public VendorManagement vendor { get; set; }
+
     }
 
     public class HouseListByvendor
@@ -143,6 +175,16 @@ namespace VacancyVillasClassLibrary
         public string[] galleryImgs { get; set; }
     }
 
+    public class VendorsHouses:House
+    {
 
+        public int VendorId { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+
+
+    }
 
 }

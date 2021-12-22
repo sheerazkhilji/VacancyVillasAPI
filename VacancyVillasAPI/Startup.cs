@@ -63,6 +63,7 @@ namespace VacancyVillasAPI
 
             services.AddTransient<IVendorServices, VendorServices>();
             services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<IAdminService, AdminService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
