@@ -187,4 +187,28 @@ namespace VacancyVillasClassLibrary
 
     }
 
+
+    public class HouseList
+    {
+        public int id { get; set; }
+
+        public int authorId { get; set; }
+
+        public DateTime date { get; set; }
+
+        public string title { get; set; }
+
+        public string featuredImage { get; set; }
+
+        public string href { get; set; }
+        public string galleryImgslist { get; set; }
+
+        public int Bedroom { get; set; }
+
+        public float price { get; set; }
+        public int stepCode { get; set; }
+
+        public string[] galleryImgs { get; set; }
+    }
+
 }
